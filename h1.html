@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+<body>
+
+    <h2>Login Form</h2>
+
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <button type="button" onclick="login()">Login</button>
+    </form>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Your API endpoint for authentication
+            const apiUrl = 'http://localhost:8080/login';
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({username, password}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.cookie = `token=${data.token}; samesite=none`;
+                console.log(data);
+                console.log(document.cookie)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+
+    <button onclick="sendcookie()">send cookie</button>
+
+    <script>
+        const sendCookieUrl = 'http://localhost:8080/sendcookie';
+        function sendcookie() {
+            fetch(sendCookieUrl).then(res => res.json()).then(data => {console.log(data)}).catch(err => console.error(err))
+        }
+    </script>
+</body>
+</html>
+
