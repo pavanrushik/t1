@@ -36,7 +36,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.cookie = `token=${data.token}; samesite=none`;
+                document.cookie = `token=${data.token}`;
                 console.log(data);
                 console.log(document.cookie)
             })
@@ -45,15 +45,14 @@
             });
         }
     </script>
-
-    <button onclick="sendcookie()">send cookie</button>
-
     <script>
         const sendCookieUrl = 'http://localhost:8080/sendcookie';
         function sendcookie() {
             fetch(sendCookieUrl).then(res => res.json()).then(data => {console.log(data)}).catch(err => console.error(err))
         }
     </script>
+    <button onclick="sendcookie()">send cookie</button>
+
 </body>
 </html>
 
